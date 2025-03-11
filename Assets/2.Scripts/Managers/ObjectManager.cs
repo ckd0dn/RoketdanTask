@@ -3,28 +3,28 @@ using UnityEngine;
 
 public class ObjectManager
 {
-    public Player Player { get; private set; }
-    public HashSet<Monster> Monsters { get; private set; } = new HashSet<Monster>();
+    public Hero Hero { get; private set; }
+    public HashSet<ZombieMelee> ZombieMelees { get; private set; } = new HashSet<ZombieMelee>();
     
     public T Spawn<T>(string key) where T : MonoBehaviour
     {
         System.Type type = typeof(T);
 
-        if (type == typeof(Player))
+        if (type == typeof(Hero))
         {
             GameObject go = Managers.Resource.Instantiate(key, pooling: true);
-            Player p = go.GetComponent<Player>();
+            Hero p = go.GetComponent<Hero>();
 
-            Player = p;
+            Hero = p;
 
             return p as T;
         }
-        else if (type == typeof(Monster))
+        else if (type == typeof(ZombieMelee))
         {
             GameObject go = Managers.Resource.Instantiate(key, pooling: true);
-            Monster m = go.GetComponent<Monster>();
+            ZombieMelee m = go.GetComponent<ZombieMelee>();
             
-            Monsters.Add(m);
+            ZombieMelees.Add(m);
             return m as T;
         }
 
@@ -35,13 +35,13 @@ public class ObjectManager
     {
         System.Type type = typeof(T);
 
-        if (type == typeof(Player))
+        if (type == typeof(Hero))
         {
 
         }
-        else if (type == typeof(Monster))
+        else if (type == typeof(ZombieMelee))
         {
-            Monsters.Remove(obj as Monster);
+            ZombieMelees.Remove(obj as ZombieMelee);
             Managers.Resource.Destroy(obj.gameObject);
         }
 

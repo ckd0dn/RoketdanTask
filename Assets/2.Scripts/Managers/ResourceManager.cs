@@ -9,8 +9,7 @@ using Object = UnityEngine.Object;
 public class ResourceManager
 {
     Dictionary<string, UnityEngine.Object> _resource = new Dictionary<string, UnityEngine.Object>();
-
-    // _resource ��ųʸ����� ���ҽ��� ������
+    
     public T Load<T>(string key) where T : Object
     {
         if (_resource.TryGetValue(key, out Object resource))
@@ -24,7 +23,7 @@ public class ResourceManager
         GameObject prefab = Load<GameObject>($"{key}");
         if (prefab == null)
         {
-            Debug.Log($"������ �ε� ���� : {key}");
+            Debug.Log($"No matching found for key : {key}");
             return null;
         }
 
@@ -47,9 +46,7 @@ public class ResourceManager
 
         Object.Destroy(go);
     }
-
-
-    #region ��巹����
+    
     public void LoadAsync<T>(string key, Action<T> callback = null) where T : UnityEngine.Object
     {
         if (_resource.TryGetValue(key, out Object resource))
@@ -86,5 +83,5 @@ public class ResourceManager
             }
         };
     }
-    #endregion
+   
 }
