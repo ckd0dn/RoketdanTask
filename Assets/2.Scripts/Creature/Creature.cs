@@ -7,12 +7,18 @@ public class Creature : MonoBehaviour
 {
     public int Health { get; set; } = 10;
     public int MaxHealth { get; set; } = 10;
-    private SpriteRenderer[] _sprites;
     protected HpBar hpbar;
-
+    private SpriteRenderer[] _sprites;
+    private Dictionary<SpriteRenderer, Color> _originalColors = new Dictionary<SpriteRenderer, Color>();
+    private Coroutine _coHitEffect;
     protected virtual void Awake()
     {
         _sprites = GetComponentsInChildren<SpriteRenderer>();
+        
+        foreach (SpriteRenderer sr in _sprites)
+        {
+            _originalColors[sr] = sr.color; 
+        }
     }
 
     private void OnEnable()
@@ -66,16 +72,14 @@ public class Creature : MonoBehaviour
     
     private void TakeHit()
     {
-        StartCoroutine(HitEffectCoroutine());
+        _coHitEffect = null;
+        _coHitEffect = StartCoroutine(HitEffectCoroutine());
     }
 
     private IEnumerator HitEffectCoroutine()
     {
-        Dictionary<SpriteRenderer, Color> originalColors = new Dictionary<SpriteRenderer, Color>();
-    
         foreach (SpriteRenderer sr in _sprites)
         {
-            originalColors[sr] = sr.color; 
             sr.color = Color.red;
         }
 
@@ -83,7 +87,7 @@ public class Creature : MonoBehaviour
 
         foreach (SpriteRenderer sr in _sprites)
         {
-            sr.color = originalColors[sr]; 
+            sr.color = _originalColors[sr]; 
         }
     }
 
