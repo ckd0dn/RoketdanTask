@@ -4,5 +4,10 @@ using UnityEngine;
 
 public class ZombieMelee : Zombie
 {
-    
+    protected override void OnDead()
+    {
+        base.OnDead();
+        
+        Managers.Object.Despawn(this);
+    }
 }

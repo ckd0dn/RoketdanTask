@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float damage = 1f;
+    [SerializeField] private int damage = 5;
     public Rigidbody2D Rb;
 
     private void Awake()
@@ -14,11 +14,27 @@ public class Bullet : MonoBehaviour
         Rb = GetComponent<Rigidbody2D>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnEnable()
+    {
+        float delay = 3f;
+        StartCoroutine(CoDestroyAfterDelay(delay));
+    }
+
+    private IEnumerator CoDestroyAfterDelay(float delay)
+    {
+        var await = new WaitForSeconds(delay); 
+        yield return await; // 3초 대기
+        Managers.Object.Despawn(this);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
         Zombie zombie = other.GetComponent<Zombie>();
-        
-        //TODO 좀비 데미지 주기
+
+        if (zombie != null)
+        {
+            zombie.OnDamaged(damage);
+            Managers.Object.Despawn(this);
+        }
     }
-    
 }

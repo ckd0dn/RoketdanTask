@@ -32,6 +32,8 @@ class Pool
 
     public void Push(GameObject go)
     {
+        if (!go.activeSelf)  return;
+        
         _pool.Release(go);
     }
 

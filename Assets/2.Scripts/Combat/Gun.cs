@@ -24,8 +24,7 @@ public class Gun : MonoBehaviour
     
         Bullet bullet = Managers.Object.Spawn<Bullet>("Bullet.prefab");
         bullet.transform.position = firePoint.position;
- 
-
+        
         if (bullet.Rb != null)
         {
             Vector2 rotatedDirection = RotateVector(direction, angleOffset);

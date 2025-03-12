@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Zombie : MonoBehaviour
+public class Zombie : Creature
 {
     [SerializeField] protected float speed = 4f;
     [SerializeField] protected float pushPower = 4f;
@@ -13,8 +13,10 @@ public class Zombie : MonoBehaviour
     private bool _isPush;
     private LayerMask _zombieLayer;
     
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         rb = GetComponent<Rigidbody2D>();
         _zombieLayer = LayerMask.GetMask("Zombie");
     }

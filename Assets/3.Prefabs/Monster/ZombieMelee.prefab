@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  pushPower: 9.85
+  pushPower: 10
   _detectionDistance: 0.7
   _rayOffsetX: 0.2
   _rayOffsetY: 0.1
