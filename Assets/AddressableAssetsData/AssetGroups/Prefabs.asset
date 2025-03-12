@@ -29,6 +29,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Prefabs
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b76411716898d248bc0040f8b003a6a
+    m_Address: Bullet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e48e7c461a85c463cba5a999afb91a67
     m_Address: ZombieMelee.prefab
     m_ReadOnly: 0
