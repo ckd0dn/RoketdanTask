@@ -6,6 +6,7 @@ public class ObjectManager
     public Hero Hero { get; private set; }
     public HashSet<ZombieMelee> ZombieMelees { get; private set; } = new HashSet<ZombieMelee>();
     public HashSet<Bullet> Bullets { get; private set; } = new HashSet<Bullet>();
+    public HashSet<HpBar> HpBars { get; private set; } = new HashSet<HpBar>();
     
     public T Spawn<T>(string key) where T : MonoBehaviour
     {
@@ -36,6 +37,14 @@ public class ObjectManager
             Bullets.Add(m);
             return m as T;
         }
+        else if (type == typeof(HpBar))
+        {
+            GameObject go = Managers.Resource.Instantiate(key, pooling: true);
+            HpBar m = go.GetComponent<HpBar>();
+            
+            HpBars.Add(m);
+            return m as T;
+        }
         return null;
     }
 
@@ -55,6 +64,11 @@ public class ObjectManager
         else if (type == typeof(Bullet))
         {
             Bullets.Remove(obj as Bullet);
+            Managers.Resource.Destroy(obj.gameObject);
+        }
+        else if (type == typeof(HpBar))
+        {
+            HpBars.Remove(obj as HpBar);
             Managers.Resource.Destroy(obj.gameObject);
         }
     }

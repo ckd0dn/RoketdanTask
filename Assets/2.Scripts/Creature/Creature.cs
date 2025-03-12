@@ -8,6 +8,7 @@ public class Creature : MonoBehaviour
     public int Health { get; set; } = 10;
     public int MaxHealth { get; set; } = 10;
     private SpriteRenderer[] _sprites;
+    protected HpBar hpbar;
 
     protected virtual void Awake()
     {
@@ -16,7 +17,27 @@ public class Creature : MonoBehaviour
 
     private void OnEnable()
     {
-        Reset();
+        Init();
+    }
+
+    private void Update()
+    {
+        if(hpbar != null)
+        {
+            hpbar.UpdatePosition(transform);
+        }
+    }
+
+    private void Init()
+    {
+        Health = MaxHealth;
+        
+        hpbar = Managers.Object.Spawn<HpBar>("HpBar.prefab");
+
+        foreach (SpriteRenderer sr in _sprites)
+        {
+            sr.color = Color.white;
+        }
     }
 
     public virtual void OnDamaged(int damage)
@@ -26,6 +47,7 @@ public class Creature : MonoBehaviour
 
         Health -= damage;
         
+        if(hpbar != null) hpbar.UpdateHpBar(MaxHealth, Health);
         
         TakeHit();
 
@@ -38,7 +60,8 @@ public class Creature : MonoBehaviour
     
     protected virtual void OnDead()
     {
-       
+        Managers.Object.Despawn<HpBar>(hpbar);
+        hpbar = null;
     }
     
     private void TakeHit()
@@ -64,13 +87,5 @@ public class Creature : MonoBehaviour
         }
     }
 
-    private void Reset()
-    {
-        Health = MaxHealth;
-        
-        foreach (SpriteRenderer sr in _sprites)
-        {
-            sr.color = Color.white;
-        }
-    }
+ 
 }
